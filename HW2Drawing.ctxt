@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=HW2Drawing
+comment1.params=args
+comment1.target=void\ main(java.lang.String[])
+comment2.params=
+comment2.target=void\ drawFigure1()
+comment2.text=\r\n\ \r\n
+comment3.params=
+comment3.target=void\ drawFigure2()
+comment3.text=\r\n\ \r\n
+comment4.params=canvas
+comment4.target=void\ drawPyramid(DrawingPanel)
+comment5.params=
+comment5.target=java.awt.Color\ getRandomColor()
+comment5.text=\r\n\ This\ function\ generates\ and\ returns\ a\ random\ Color\ using\ rgb\ values\r\n\ clamped\ between\ 0\ and\ 255\r\n
+comment6.params=
+comment6.target=int\ getRandom()
+comment6.text=\r\n\ \ This\ is\ the\ algorithm\ for\ returning\ a\ random\ number\ between\ 0\ and\ 255\r\n
+numComments=7
