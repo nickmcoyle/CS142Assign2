@@ -17,6 +17,10 @@ public class HW2Drawing
    public static final int WIDTH_2 = 400;
    public static final int HEIGHT_2 = 400;
    public static final int STEP = 5;
+   
+   //we need these to draw figure 2
+   public static DrawingPanel canvas2 = new DrawingPanel(WIDTH_2, HEIGHT_2); 
+   public static Graphics pen2 = canvas2.getGraphics();
     
    public static void main(String[] args) {
        drawFigure1();
@@ -32,124 +36,102 @@ public class HW2Drawing
        canvas.setBackground(c);
 
        Graphics pen = canvas.getGraphics();
-            
-       int x1 = WIDTH/2, y1 = 0;
-       int x2 = WIDTH/2, y2 = HEIGHT/2;
-       int y3 = HEIGHT;
+
+       int xMin = 0, yMin = 0;
+       int xMax = WIDTH, yMax = HEIGHT;
+       int xMid = WIDTH/2, yMid = HEIGHT/2;
+       int x1Quarter = WIDTH/4, y1Quarter = HEIGHT/4;
+       int x3Quarter = WIDTH*3/4, y3Quarter = HEIGHT*3/4;       
        int end = HEIGHT/2;
        
        for(int i = 0; i<end; i = i + STEP) {
+            
            //draw largest parabola           
            pen.setColor(new Color(230, 66, 244));
-           pen.drawLine(x1, y1 + i, x2 + i, y2);
-           pen.drawLine(x1, y1 + i, x2 - i, y2);
-           pen.drawLine(x1, y3 - i, x2 - i, y2);
-           pen.drawLine(x1, y3 - i, x2 + i, y2); 
+           pen.drawLine(xMid, yMin + i, xMid + i, yMid);
+           pen.drawLine(xMid, yMin + i, xMid - i, yMid);
+           pen.drawLine(xMid, yMax - i, xMid - i, yMid);
+           pen.drawLine(xMid, yMax - i, xMid + i, yMid);           
            
-            //draw second largest parabola
-           if(i<end/2) {               
-               pen.setColor(new Color(0, 130, 200));
-               pen.drawLine(x1, y1 + i, x2 + i, y2);
-               pen.drawLine(x1, y1 + i, x2 - i, y2);
-               pen.drawLine(x1, y3 - i, x2 - i, y2);
-               pen.drawLine(x1, y3 - i, x2 + i, y2); 
-           }
+            //draw green diamond           
+           pen.setColor(new Color(75, 244, 66));
+           pen.drawLine(xMid, yMin + i/2, xMid + i/4, yMid);
+           pen.drawLine(xMid, yMin + i/2, xMid - i/4, yMid);
+           pen.drawLine(xMid, yMax - i/2, xMid - i/4, yMid);
+           pen.drawLine(xMid, yMax - i/2, xMid + i/4, yMid);
            
-           //draw 3rd largest parabola
-           if(i<end/4) {   
-               pen.setColor(new Color(75, 244, 66));
-               pen.drawLine(x1, y1 + i, x2 + i, y2);
-               pen.drawLine(x1, y1 + i, x2 - i, y2);
-               pen.drawLine(x1, y3 - i, x2 - i, y2);
-               pen.drawLine(x1, y3 - i, x2 + i, y2); 
-           }                  
+           //draw blue diamond                        
+           pen.setColor(new Color(0, 130, 200));
+           pen.drawLine(xMid, y1Quarter + i/2, x3Quarter - i/2, yMid);
+           pen.drawLine(xMid, y1Quarter + i/2, x1Quarter + i/2, yMid);
+           pen.drawLine(xMid, y3Quarter - i/2, x3Quarter - i/2, yMid);
+           pen.drawLine(xMid, y3Quarter - i/2, x1Quarter + i/2, yMid);                         
        }      
    }
    
    /**
     * This method draws a figure of my own design on the screen
     */
-   public static void drawFigure2() {
-       DrawingPanel canvas2 = new DrawingPanel(WIDTH_2, HEIGHT_2);
-       canvas2.setBackground(new Color(0, 200, 255));
-       Graphics pen = canvas2.getGraphics();
+   public static void drawFigure2() {       
+       // a fill color for the background of our canvas       
+       canvas2.setBackground(new Color(0, 200, 255));       
+       // a fill for the foreground of our canvas
+       pen2.setColor(getRandomColor());
+       pen2.fillRect(0, HEIGHT_2/2, WIDTH_2, HEIGHT_2/2);
        
-       pen.setColor(getRandomColor());
-       pen.fillRect(0, HEIGHT_2 / 2, WIDTH_2, HEIGHT_2);
-       
-       drawPyramid(pen);
-       drawUFO(pen);
-       drawAlien(pen);     
+       //draw some interesting things on the canvas
+       drawPyramid(WIDTH_2/6, HEIGHT_2/15, WIDTH_2/50, HEIGHT_2/24, new Color(255, 208, 0));
+       drawUFO(WIDTH_2* 3/4, HEIGHT_2/7, WIDTH_2/6, HEIGHT_2/28, new Color(150, 150, 150));
+       drawAlien(WIDTH_2/2, HEIGHT_2/2, WIDTH_2/5, HEIGHT_2/6, new Color(110, 255, 60));     
    }
    
    /**
     * This method draws a pyramid upper left of screen
     * @param pen the implement for drawing on the canvas
     */
-   public static void drawPyramid(Graphics pen) {       
-       pen.setColor(new Color(255, 208, 0));     
+   public static void drawPyramid(int x, int y, int width, int height, Color color) {                             
+       int blockSize = height/5;      
        
-       int x = WIDTH_2/5;
-       int y = HEIGHT_2/5;       
-       
-       for(int i = 0; i<15; ++i) {
-          pen.fillRect(x - (i*3), y + (i*3), 5 + (i*6), 3);
-       }                   
-       
-       pen.setColor(new Color(255, 255, 0));
-       
-       for(int i = 0; i<15; ++i) {
-           pen.drawRect(x - (i*3), y + (i*3), 5 + (i*6), 3);
-       } 
+       for(int i = 1; i<height; ++i) {
+          pen2.setColor(color);
+          pen2.fillRect(x - (i*blockSize), y + (i*blockSize), 2*(i*blockSize), blockSize);
+          pen2.setColor(new Color(255, 255, 0)); 
+          pen2.drawRect(x - (i*blockSize), y + (i*blockSize), 2*(i*blockSize), blockSize);
+       }            
    }
    
    /**
     * This method draws a flying saucer upper right of screen
     * @param pen the implement for drawing on the canvas
     */
-   public static void drawUFO(Graphics pen) {       
-       pen.setColor(new Color(150, 150, 150));
-       
-       int x = WIDTH_2* 3/4;
-       int y = HEIGHT_2/7;       
-             
-       pen.fillOval(x, y, 70, 16);
-       pen.drawLine(x + 15, y + 20, x + 30, y + 15);
-       pen.drawLine(x + 40, y + 15, x + 55, y + 20);
+   public static void drawUFO(int x, int y, int width, int height, Color color) {       
+       pen2.setColor(color);             
+       pen2.fillOval(x, y, width, height);
+       pen2.drawLine(x + width/4, y + height, x, y + height + height/4);
+       pen2.drawLine(x + width * 3/4, y + height, x + width, y + height + height/4);
    }
    
    /**
     * This method draws an Alien middle of screen and prints some text
     * @param pen the implement for drawing on the canvas
     */
-   public static void drawAlien(Graphics pen) {       
-       pen.setColor(new Color(110, 255, 60));
-             
-       int x = WIDTH_2/2;
-       int y = HEIGHT_2/2;       
+   public static void drawAlien(int x, int y, int width, int height, Color color) {       
+       pen2.setColor(color);            
 
        //draw head     
-       pen.fillOval(x, y, 80, 60);
-       pen.fillOval(x+10, y, 60, 80);   
-       
-       //draw body
-       pen.fillOval(x + 32, y + 80, 15, 60);       
-       
-       //draw arms
-       pen.drawLine(x + 37, y + 80, x + 20, y + 130);
-       pen.drawLine(x + 42, y + 80, x + 59, y + 130);
-       
-       pen.setColor(Color.BLACK);
-
+       pen2.fillOval(x, y, width, height);
+       pen2.fillOval(x + width/6, y, height, width);          
+      
        //draw eyes
-       pen.fillOval(x + 5, y + 10, 10, 20);
-       pen.fillOval(x + 35, y + 10, 10, 20);      
+       pen2.setColor(Color.BLACK);
+       pen2.fillOval(x + width/12, y + height/10, width/6, height/4);
+       pen2.fillOval(x + width/3, y + height/8, width/6, height/4);      
        
        //draw nose
-       pen.drawArc(x + 35, y + 40, 10,20, 0, 25);
-       pen.drawArc(x + 30, y + 35, 10,20, 0, -25);       
+       pen2.drawArc(x + width/3, y + height/2, 10,20, 0, 25);
+       pen2.drawArc(x + width/2, y + height/2, 10,20, 0, -25);       
        
-       pen.drawString("WE ARE ALIENS", x - 5, y - 10);
+       pen2.drawString("WE ARE ALIENS", x - width/6, y - height/8);
    }  
           
    

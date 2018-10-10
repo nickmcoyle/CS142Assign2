@@ -1,0 +1,16 @@
+Hi Tristan, your work looks good. I think its cool that the checkerboard still looks right even if you change the size of the screen. The only things I can point out are stylistic. Mainly the names of your variables and some dead code. I struggle with naming my variables with meaningful and expressive names especially when using loops. When I look at my code where there are loops, it is hard to tell what is going on just by reading the code especially nested loops. I think that's an issue with loops that is very common. Anyway, here are the specifics:  
+
+In main method you call drawBoard() and drawCheckers() methods. does it make sense to just call drawBoard() without calling drawCheckers()? Would you have checkers without a board or vice versa? does it make more sense to have one method that calls those two methods, so both get drawn together?
+
+Instead of lines 19, 20, and 21 consider making a function that generates a random number because the way you have it, you have code duplication, but this also makes me wonder, should the random color components be constants? I'm still learning about the correct way to do things in Java, but I think if you are going to the trouble to make the color components each a constant, you should make the randomColor that you instantiate using those constants be a constant as well. 
+
+Also on this line consider naming the constants A, B, and C more meaningful names like R G B since they are used as color components. That way, someone else reading the code will have an idea of what they are used for.
+
+lines 28-38 maybe delete all the dead code before final submission
+
+line 63 the for loop has a calculation in it, which probably isnt very costly one, but if you can take that calculation out of the loop so it wont run each time, that would be more efficient.  
+
+line 141 I was confused by the names you call your variables. I think centerCheckY is a calculation for the middle of the square, so maybe its more expressive to call it centerSquare or centerSpace.
+Also since you did say today in class that the board has to be a perfect square, centerCheckY and centerCheckX would be equal so you dont need to declare a variable for both. And maybe you can define some kind of constraint to ensure that height == width, but that might be out of the scope of this assignment. 
+
+line 148 I don't see anywhere that you use this variable rows
